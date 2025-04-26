@@ -1,1044 +1,1078 @@
 <!DOCTYPE html>
 <html ng-app="genionweb">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Genions - Open BioScience BioTech</title>
-  <link rel="shortcut icon" href="./IMG/fav.png" type="image/x-icon">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-  <style>
-:root {
-  --primary-color: #00b4d8;
-  --secondary-color: #0077b6;
-  --background: #ffffff;
-  --text-color: #333333;
-  --card-bg: #ffffff;
-}
-
-[data-theme="dark"] {
-  --background: #1a1a1a;
-  --text-color: #ffffff;
-  --card-bg: #2d2d2d;
-}
-
-body {
-  padding-top: 70px;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--background);
-  color: var(--text-color);
-  transition: all 0.3s ease;
-}
-
-.glass-nav {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 1rem 0;
-}
-
-.logo-icon {
-  transition: transform 0.3s ease;
-}
-
-.navbar-brand:hover .logo-icon {
-  transform: rotate(180deg);
-}
-
-.logo-text {
-  font-size: 1.5rem;
-  font-weight: 700;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-left: 0.5rem;
-}
-
-.custom-toggler {
-  border: none;
-  padding: 0.25rem;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.custom-toggler:focus {
-  box-shadow: none;
-}
-
-.navbar-nav .nav-item {
-  margin: 0 0.5rem;
-}
-
-.navbar-nav .nav-link {
-  position: relative;
-  padding: 0.5rem 1rem;
-  color: var(--text-color);
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.navbar-nav .nav-link::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  transition: all 0.3s ease;
-  transform: translateX(-50%);
-}
-
-.navbar-nav .nav-link:hover::before,
-.navbar-nav .nav-link.active::before {
-  width: 80%;
-}
-
-.navbar-nav .nav-link:hover,
-.navbar-nav .nav-link.active {
-  color: var(--primary-color);
-}
-
-/* Blog Grid Layout */
-.blog-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
-}
-
-.glow-line {
-  width: 100px;
-  height: 4px;
-  background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
-  margin: 1.5rem auto;
-  position: relative;
-}
-
-.glow-line::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.2);
-  filter: blur(2px);
-}
-
-/* Modern Blog Card */
-.blog-card-modern {
-  background: var(--card-bg);
-  border-radius: 20px;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.blog-card-modern:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-}
-
-.blog-image-container {
-  position: relative;
-  height: 250px;
-  overflow: hidden;
-}
-
-.blog-image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.blog-card-modern:hover .blog-image-container img {
-  transform: scale(1.1);
-}
-
-.blog-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.7));
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 1.5rem;
-}
-
-.blog-card-modern:hover .blog-overlay {
-  opacity: 1;
-}
-
-.blog-category-badge {
-  align-self: flex-start;
-  background: var(--primary-color);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  backdrop-filter: blur(5px);
-}
-
-.read-more-btn {
-  align-self: flex-end;
-  background: transparent;
-  border: 2px solid white;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 25px;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease;
-}
-
-.read-more-btn:hover {
-  background: white;
-  color: var(--primary-color);
-}
-
-.blog-content {
-  padding: 1.5rem;
-}
-
-.blog-meta {
-  display: flex;
-  justify-content: space-between;
-  color: var(--text-color);
-  opacity: 0.7;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-}
-
-.blog-title {
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
-  color: var(--text-color);
-}
-
-.blog-excerpt {
-  color: var(--text-color);
-  opacity: 0.8;
-  line-height: 1.6;
-}
-
-/* Single Blog Post */
-.blog-post-hero {
-  height: 60vh;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to bottom, transparent, var(--background));
-}
-
-.blog-post-modern {
-  max-width: 800px;
-  margin: -100px auto 0;
-  position: relative;
-  background: var(--card-bg);
-  padding: 2rem;
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-.back-button {
-  position: absolute;
-  top: -60px;
-  left: 0;
-  background: var(--card-bg);
-  border: none;
-  color: var(--text-color);
-  padding: 0.8rem 1.5rem;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.back-button:hover {
-  transform: translateX(-5px);
-}
-
-.post-header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.post-category {
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  color: white;
-  padding: 0.5rem 1.5rem;
-  border-radius: 25px;
-  font-size: 0.9rem;
-  display: inline-block;
-  margin-bottom: 1.5rem;
-}
-
-.post-title {
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.post-meta {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  color: var(--text-color);
-  opacity: 0.7;
-}
-
-.post-content {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: var(--text-color);
-}
-
-.post-content .lead {
-  font-size: 1.3rem;
-  color: var(--primary-color);
-  margin-bottom: 2rem;
-}
-
-@media (max-width: 768px) {
-  .blog-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .blog-post-hero {
-    height: 40vh;
-  }
-
-  .post-title {
-    font-size: 2rem;
-  }
-
-  .post-meta {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
-  }
-}
-
-.shadow-hover {
-  transition: all 0.3s ease;
-}
-
-.shadow-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-
-.btn-outline-aqua {
-  color: var(--primary-color);
-  border-color: var(--primary-color);
-}
-
-.btn-outline-aqua:hover {
-  color: white;
-  background-color: var(--primary-color);
-}
-
-.blog-post-container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-
-.blog-post-content {
-  background: var(--card-bg);
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.content-wrapper {
-  flex: 1;
-}
-
-section {
-  padding: 80px 0;
-  background-color: var(--background);
-}
-
-.hero-section {
-  background: linear-gradient(135deg, var(--background) 0%, var(--card-bg) 100%);
-  padding: 80px 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.text-gradient {
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.btn-gradient {
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  border: none;
-  color: white;
-  transition: transform 0.3s ease;
-}
-
-.btn-gradient:hover {
-  transform: translateY(-2px);
-  color: white;
-}
-
-.btn-outline-gradient {
-  background: transparent;
-  border: 2px solid var(--primary-color);
-  color: var(--text-color);
-  transition: all 0.3s ease;
-}
-
-.btn-outline-gradient:hover {
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  color: white;
-}
-
-.hero-stats .stat-item {
-  text-align: center;
-  padding: 15px;
-  background: var(--card-bg);
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-.floating-cards {
-  position: relative;
-  height: 400px;
-}
-
-.tech-card {
-  position: absolute;
-  background: var(--card-bg);
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  text-align: center;
-  animation: float 6s ease-in-out infinite;
-}
-
-.tech-card:nth-child(1) {
-  top: 20%;
-  left: 10%;
-  animation-delay: 0s;
-}
-
-.tech-card:nth-child(2) {
-  top: 50%;
-  left: 50%;
-  animation-delay: 2s;
-}
-
-.tech-card:nth-child(3) {
-  top: 30%;
-  right: 10%;
-  animation-delay: 4s;
-}
-
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-  100% { transform: translateY(0px); }
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  margin-top: 50px;
-}
-
-.feature-item {
-  padding: 30px;
-  background: var(--card-bg);
-  border-radius: 15px;
-  transition: transform 0.3s ease;
-}
-
-.feature-item:hover {
-  transform: translateY(-10px);
-}
-
-.feature-item i {
-  color: var(--primary-color);
-}
-
-section:nth-child(even) {
-  background-color: #ffffff;
-}
-
-.card {
-  transition: transform 0.2s;
-  border-radius: 15px;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-}
-
-/* Repository Section Styles */
-.repo-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
-}
-
-.repo-card {
-  background: var(--card-bg);
-  border-radius: 20px;
-  padding: 2rem;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.repo-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 0;
-}
-
-.repo-card:hover {
-  transform: translateY(-10px);
-}
-
-.repo-card:hover::before {
-  opacity: 0.05;
-}
-
-.repo-icon {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-}
-
-.repo-icon i {
-  font-size: 2rem;
-  color: white;
-  margin: 0;
-}
-
-.repo-content {
-  position: relative;
-  z-index: 1;
-}
-
-.repo-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.repo-stats {
-  display: flex;
-  gap: 1rem;
-  color: var(--text-color);
-  opacity: 0.7;
-}
-
-.repo-stats i {
-  margin-right: 0.3rem;
-}
-
-.repo-tech {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 1rem 0;
-}
-
-.tech-tag {
-  background: rgba(0, 180, 216, 0.1);
-  color: var(--primary-color);
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
-}
-
-.repo-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1.5rem;
-}
-
-.repo-activity {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #4CAF50;
-  font-size: 0.9rem;
-}
-
-.activity-dot {
-  width: 8px;
-  height: 8px;
-  background: #4CAF50;
-  border-radius: 50%;
-  display: inline-block;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.2); opacity: 0.7; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-.bg-gradient {
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 2rem;
-}
-
-.vision-card {
-  background: var(--card-bg);
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  height: 100%;
-  transition: transform 0.3s ease;
-}
-
-.vision-card:hover {
-  transform: translateY(-10px);
-}
-
-.icon-circle {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  color: white;
-}
-
-.feature-item-modern {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-}
-
-.feature-item-modern i {
-  font-size: 2rem;
-  color: var(--primary-color);
-  flex-shrink: 0;
-}
-
-.rounded-xl {
-  border-radius: 20px;
-}
-
-.about-image-grid img {
-  transition: transform 0.3s ease;
-}
-
-.about-image-grid img:hover {
-  transform: scale(1.05);
-}
-
-.bi {
-  margin-right: 10px;
-  font-size: 1.2em;
-  color: var(--primary-color);
-}
-
-.footer {
-  background: linear-gradient(180deg, var(--background) 0%, rgba(0, 180, 216, 0.05) 100%);
-  margin-top: auto;
-  position: relative;
-  overflow: hidden;
-}
-
-.footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
-}
-
-.footer-content {
-  padding: 4rem 0 2rem;
-}
-
-.footer-brand {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1rem;
-}
-
-.footer-logo {
-  filter: drop-shadow(0 0 10px rgba(0, 180, 216, 0.3));
-}
-
-.footer-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin: 0;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.footer-tagline {
-  color: var(--text-color);
-  opacity: 0.7;
-  margin: 0;
-}
-
-.footer-links {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
-}
-
-.quick-links {
-  display: flex;
-  gap: 2rem;
-}
-
-.quick-links a {
-  color: var(--text-color);
-  text-decoration: none;
-  transition: color 0.3s ease;
-  position: relative;
-}
-
-.quick-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-  transition: width 0.3s ease;
-}
-
-.quick-links a:hover {
-  color: var(--primary-color);
-}
-
-.quick-links a:hover::after {
-  width: 100%;
-}
-
-.social-links {
-  display: flex;
-  gap: 1rem;
-}
-
-.social-link {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 180, 216, 0.1);
-  color: var(--text-color);
-  transition: all 0.3s ease;
-}
-
-.social-link:hover {
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  color: white;
-  transform: translateY(-3px);
-}
-
-.social-link i {
-  font-size: 1.2rem;
-  margin: 0;
-}
-
-.footer-bottom {
-  padding: 1.5rem 0;
-  position: relative;
-}
-
-.copyright {
-  text-align: center;
-  color: var(--text-color);
-  opacity: 0.7;
-  margin: 0;
-}
-
-.footer-line {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 200px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
-}
-
-@media (max-width: 768px) {
-  .footer-links {
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .quick-links {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-  }
-}
-
-/* Smooth transitions */
-section {
-  opacity: 0;
-  animation: fadeIn 0.5s ease-in forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  section {
-    padding: 40px 0;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-}
-  </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Genions - Open BioScience BioTech</title>
+    <link rel="shortcut icon" href="./IMG/fav.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00b4d8;
+            --secondary-color: #0077b6;
+            --background: #ffffff;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --background: #1a1a1a;
+            --text-color: #ffffff;
+            --card-bg: #2d2d2d;
+        }
+
+        body {
+            padding-top: 70px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--background);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+        }
+
+        .logo-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover .logo-icon {
+            transform: rotate(180deg);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-left: 0.5rem;
+        }
+
+        .custom-toggler {
+            border: none;
+            padding: 0.25rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .custom-toggler:focus {
+            box-shadow: none;
+        }
+
+        .navbar-nav .nav-item {
+            margin: 0 0.5rem;
+        }
+
+        .navbar-nav .nav-link {
+            position: relative;
+            padding: 0.5rem 1rem;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .navbar-nav .nav-link:hover::before,
+        .navbar-nav .nav-link.active::before {
+            width: 80%;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        /* Blog Grid Layout */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .glow-line {
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            margin: 1.5rem auto;
+            position: relative;
+        }
+
+        .glow-line::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+            filter: blur(2px);
+        }
+
+        /* Modern Blog Card */
+        .blog-card-modern {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-card-modern:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .blog-image-container {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .blog-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .blog-card-modern:hover .blog-image-container img {
+            transform: scale(1.1);
+        }
+
+        .blog-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.7));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.5rem;
+        }
+
+        .blog-card-modern:hover .blog-overlay {
+            opacity: 1;
+        }
+
+        .blog-category-badge {
+            align-self: flex-start;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .read-more-btn {
+            align-self: flex-end;
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .read-more-btn:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-color);
+            opacity: 0.7;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .blog-excerpt {
+            color: var(--text-color);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Single Blog Post */
+        .blog-post-hero {
+            height: 60vh;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, var(--background));
+        }
+
+        .blog-post-modern {
+            max-width: 800px;
+            margin: -100px auto 0;
+            position: relative;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button {
+            position: absolute;
+            top: -60px;
+            left: 0;
+            background: var(--card-bg);
+            border: none;
+            color: var(--text-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button:hover {
+            transform: translateX(-5px);
+        }
+
+        .post-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .post-category {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .post-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+
+        .post-content .lead {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-post-hero {
+                height: 40vh;
+            }
+
+            .post-title {
+                font-size: 2rem;
+            }
+
+            .post-meta {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+        }
+
+        .shadow-hover {
+            transition: all 0.3s ease;
+        }
+
+        .shadow-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline-aqua {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-outline-aqua:hover {
+            color: white;
+            background-color: var(--primary-color);
+        }
+
+        .blog-post-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+
+        .blog-post-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-wrapper {
+            flex: 1;
+        }
+
+        section {
+            padding: 80px 0;
+            background-color: var(--background);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--background) 0%, var(--card-bg) 100%);
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .text-gradient {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-gradient {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .btn-outline-gradient {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-gradient:hover {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .hero-stats .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .floating-cards {
+            position: relative;
+            height: 400px;
+        }
+
+        .tech-card {
+            position: absolute;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .tech-card:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .tech-card:nth-child(2) {
+            top: 50%;
+            left: 50%;
+            animation-delay: 2s;
+        }
+
+        .tech-card:nth-child(3) {
+            top: 30%;
+            right: 10%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-item {
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-item i {
+            color: var(--primary-color);
+        }
+
+        section:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        .card {
+            transition: transform 0.2s;
+            border-radius: 15px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Repository Section Styles */
+        .repo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .repo-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .repo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        .repo-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .repo-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .repo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .repo-icon i {
+            font-size: 2rem;
+            color: white;
+            margin: 0;
+        }
+
+        .repo-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .repo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .repo-stats {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .repo-stats i {
+            margin-right: 0.3rem;
+        }
+
+        .repo-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tech-tag {
+            background: rgba(0, 180, 216, 0.1);
+            color: var(--primary-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .repo-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+
+        .repo-activity {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #4CAF50;
+            font-size: 0.9rem;
+        }
+
+        .activity-dot {
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .bg-gradient {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+        }
+
+        .vision-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .vision-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            color: white;
+        }
+
+        .feature-item-modern {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .feature-item-modern i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+
+        .rounded-xl {
+            border-radius: 20px;
+        }
+
+        .about-image-grid img {
+            transition: transform 0.3s ease;
+        }
+
+        .about-image-grid img:hover {
+            transform: scale(1.05);
+        }
+
+        .bi {
+            margin-right: 10px;
+            font-size: 1.2em;
+            color: var(--primary-color);
+        }
+
+        .footer {
+            background: linear-gradient(180deg, var(--background) 0%, rgba(0, 180, 216, 0.05) 100%);
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        }
+
+        .footer-content {
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .footer-logo {
+            filter: drop-shadow(0 0 10px rgba(0, 180, 216, 0.3));
+        }
+
+        .footer-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-tagline {
+            color: var(--text-color);
+            opacity: 0.7;
+            margin: 0;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .quick-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .quick-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .quick-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transition: width 0.3s ease;
+        }
+
+        .quick-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .quick-links a:hover::after {
+            width: 100%;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 180, 216, 0.1);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .social-link i {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .footer-bottom {
+            padding: 1.5rem 0;
+            position: relative;
+        }
+
+        .copyright {
+            text-align: center;
+            color: var(--text-color);
+            opacity: 0.7;
+            margin: 0;
+        }
+
+        .footer-line {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        }
+
+        @media (max-width: 768px) {
+            .footer-links {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .quick-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+        }
+
+        /* Smooth transitions */
+        section {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            section {
+                padding: 40px 0;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
+
 <body ng-controller="MainCtrl">
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg fixed-top glass-nav">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="#home">
-        <svg class="logo-icon me-2" width="32" height="32" viewBox="0 0 32 32">
-          <path d="M16 0C7.163 0 0 7.163 0 16s7.163 16 16 16 16-7.163 16-16S24.837 0 16 0zm0 4c6.627 0 12 5.373 12 12s-5.373 12-12 12S4 22.627 4 16 9.373 4 16 4zm0 4c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8z" fill="url(#logo-gradient)"/>
-          <defs>
-            <linearGradient id="logo-gradient" x1="0" y1="0" x2="32" y2="32">
-              <stop offset="0%" stop-color="#00b4d8"/>
-              <stop offset="100%" stop-color="#0077b6"/>
-            </linearGradient>
-          </defs>
-        </svg>
-        <span class="logo-text">Genions</span>
-      </a>
-      <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item" ng-repeat="section in sections">
-            <a class="nav-link" href="#{{section.toLowerCase()}}" ng-click="setActive(section)" ng-class="{active: isActive(section)}">
-              <span class="nav-text">{{section}}</span>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top glass-nav">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#home">
+                <svg class="logo-icon me-2" width="32" height="32" viewBox="0 0 32 32">
+                    <path
+                        d="M16 0C7.163 0 0 7.163 0 16s7.163 16 16 16 16-7.163 16-16S24.837 0 16 0zm0 4c6.627 0 12 5.373 12 12s-5.373 12-12 12S4 22.627 4 16 9.373 4 16 4zm0 4c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8z"
+                        fill="url(#logo-gradient)" />
+                    <defs>
+                        <linearGradient id="logo-gradient" x1="0" y1="0" x2="32" y2="32">
+                            <stop offset="0%" stop-color="#00b4d8" />
+                            <stop offset="100%" stop-color="#0077b6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span class="logo-text">Genions</span>
             </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Content sections -->
-  <div class="content-wrapper">
-    <!-- Home Section -->
-    <section id="home" ng-show="activeSection === 'Home'" class="min-vh-100">
-        <div class="hero-section">
-          <div class="container">
-            <div class="row align-items-center">
-              <div class="col-lg-6 hero-content">
-                <h1 class="display-3 fw-bold mb-4 text-gradient">Welcome to Genions</h1>
-                <p class="lead mb-4">Advancing Open Science Through Innovation and Cutting-edge Technology</p>
-                <div class="hero-stats d-flex gap-4 mb-5">
-                  <div class="stat-item">
-                    <h3 class="fw-bold">50+</h3>
-                    <p>Research Projects</p>
-                  </div>
-                  <div class="stat-item">
-                    <h3 class="fw-bold">100+</h3>
-                    <p>Contributors</p>
-                  </div>
-                  <div class="stat-item">
-                    <h3 class="fw-bold">25+</h3>
-                    <p>Publications</p>
-                  </div>
-                </div>
-
-              <div class="col-lg-6 position-relative hero-visual">
-                <div class="floating-cards">
-                  <div class="tech-card">
-                    <i class="bi bi-dna display-4"></i>
-                    <h5>DNA Analysis</h5>
-                  </div>
-                  <div class="tech-card">
-                    <i class="bi bi-cpu display-4"></i>
-                    <h5>Open Research</h5>
-                  </div>
-                  <div class="tech-card">
-                    <i class="bi bi-graph-up display-4"></i>
-                    <h5>BioScience</h5>
-                  </div>
-                </div>
-              </div>
+            <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item" ng-repeat="section in sections">
+                        <a class="nav-link" href="#{{section.toLowerCase()}}" ng-click="setActive(section)"
+                            ng-class="{active: isActive(section)}">
+                            <span class="nav-text">{{section}}</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
-          </div>
         </div>
-        <div class="container py-5">
-          <div class="features-grid">
-            <div class="feature-item text-center">
-              <i class="bi bi-laptop display-5 mb-3"></i>
-              <h4>Cloud Computing</h4>
-              <p>Powerful computational resources for research</p>
-            </div>
-            <div class="feature-item text-center">
-              <i class="bi bi-shield-check display-5 mb-3"></i>
-              <h4>Secure Platform</h4>
-              <p>Enterprise-grade security measures</p>
-            </div>
-            <div class="feature-item text-center">
-              <i class="bi bi-people display-5 mb-3"></i>
-              <h4>Collaboration</h4>
-              <p>Connect with researchers worldwide</p>
-            </div>
-            <div class="feature-item text-center">
-              <i class="bi bi-graph-up-arrow display-5 mb-3"></i>
-              <h4>Analytics</h4>
-              <p>Advanced data visualization tools</p>
-            </div>
-          </div>
-        </div>
-      </section>
+    </nav>
 
-    <!-- About Section -->
-    <section id="about" ng-show="activeSection === 'About'" class="min-vh-100">
-        <div class="container py-5">
-          <div class="row mb-5">
-            <div class="col-lg-8 mx-auto text-center">
-              <span class="badge bg-gradient mb-3">Our Story</span>
-              <h2 class="display-4 fw-bold mb-4">Revolutionizing Open Science</h2>
-              <p class="lead text-muted">Genions stands at the forefront of biological innovation, merging cutting-edge technology with collaborative research methodologies.</p>
-            </div>
-          </div>
-  
-          <div class="row g-4 mb-5">
-            <div class="col-md-4">
-              <div class="vision-card text-center p-4">
-                <div class="icon-circle mb-4">
-                  <i class="bi bi-eye display-6"></i>
-                </div>
-                <h3 class="h4 mb-3">Our Vision</h3>
-                <p>To democratize biological research through open-source tools and collaborative platforms.</p>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="vision-card text-center p-4">
-                <div class="icon-circle mb-4">
-                  <i class="bi bi-bullseye display-6"></i>
-                </div>
-                <h3 class="h4 mb-3">Our Mission</h3>
-                <p>Accelerating scientific discoveries by breaking down barriers between researchers worldwide.</p>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="vision-card text-center p-4">
-                <div class="icon-circle mb-4">
-                  <i class="bi bi-stars display-6"></i>
-                </div>
-                <h3 class="h4 mb-3">Our Values</h3>
-                <p>Transparency, collaboration, innovation, and commitment to scientific excellence.</p>
-              </div>
-            </div>
-          </div>
-  
-          <div class="row align-items-center g-5">
-            <div class="col-lg-6">
-              <div class="about-content">
-                <h3 class="h2 mb-4">Why Choose Genions</h3>
-                <div class="feature-list">
-                  <div class="feature-item-modern mb-4">
-                    <i class="bi bi-dna"></i>
-                    <div>
-                      <h4 class="h5">Advanced Research Tools</h4>
-                      <p>State-of-the-art DNA analysis and genomic visualization tools.</p>
+    <!-- Content sections -->
+    <div class="content-wrapper">
+        <!-- Home Section -->
+        <section id="home" ng-show="activeSection === 'Home'" class="min-vh-100">
+            <div class="hero-section">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 hero-content">
+                            <h1 class="display-3 fw-bold mb-4 text-gradient">Welcome to Genions</h1>
+                            <p class="lead mb-4">Advancing Open Science Through Innovation and Cutting-edge Technology
+                            </p>
+                            <div class="hero-stats d-flex gap-4 mb-5">
+                                <div class="stat-item">
+                                    <h3 class="fw-bold">50+</h3>
+                                    <p>Research Projects</p>
+                                </div>
+                                <div class="stat-item">
+                                    <h3 class="fw-bold">1000+</h3>
+                                    <p>Contributors</p>
+                                </div>
+                                <div class="stat-item">
+                                    <h3 class="fw-bold">25+</h3>
+                                    <p>Publications</p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 position-relative hero-visual">
+                                <div class="floating-cards">
+                                    <div class="tech-card">
+                                        <i class="bi bi-dna display-4"></i>
+                                        <h5>DNA Analysis</h5>
+                                    </div>
+                                    <div class="tech-card">
+                                        <i class="bi bi-cpu display-4"></i>
+                                        <h5>Research</h5>
+                                    </div>
+                                    <div class="tech-card">
+                                        <i class="bi bi-graph-up display-4"></i>
+                                        <h5>BioScience</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  <div class="feature-item-modern mb-4">
-                    <i class="bi bi-cpu"></i>
-                    <div>
-                      <h4 class="h5">AI-Powered Solutions</h4>
-                      <p>Leveraging machine learning for groundbreaking biological insights.</p>
-                    </div>
-                  </div>
-                  <div class="feature-item-modern mb-4">
-                    <i class="bi bi-graph-up"></i>
-                    <div>
-                      <h4 class="h5">Data Analytics</h4>
-                      <p>Advanced analytics platforms for comprehensive research data.</p>
-                    </div>
-                  </div>
-                  <div class="feature-item-modern">
-                    <i class="bi bi-people"></i>
-                    <div>
-                      <h4 class="h5">Global Community</h4>
-                      <p>Connect with researchers and scientists worldwide.</p>
-                    </div>
-                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-               <div class="about-image-grid">
+                <div class="container py-5">
+                    <div class="features-grid">
+                        <div class="feature-item text-center">
+                            <i class="bi bi-laptop display-5 mb-3"></i>
+                            <h4>Cloud Computing</h4>
+                            <p>Powerful computational resources for research</p>
+                        </div>
+                        <div class="feature-item text-center">
+                            <i class="bi bi-shield-check display-5 mb-3"></i>
+                            <h4>Secure Platform</h4>
+                            <p>Enterprise-grade security measures</p>
+                        </div>
+                        <div class="feature-item text-center">
+                            <i class="bi bi-people display-5 mb-3"></i>
+                            <h4>Collaboration</h4>
+                            <p>Connect with researchers worldwide</p>
+                        </div>
+                        <div class="feature-item text-center">
+                            <i class="bi bi-graph-up-arrow display-5 mb-3"></i>
+                            <h4>Analytics</h4>
+                            <p>Advanced data visualization tools</p>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" ng-show="activeSection === 'About'" class="min-vh-100">
+            <div class="container py-5">
+                <div class="row mb-5">
+                    <div class="col-lg-8 mx-auto text-center">
+                        <span class="badge bg-gradient mb-3">Our Story</span>
+                        <h2 class="display-4 fw-bold mb-4">Revolutionizing Open Science</h2>
+                        <p class="lead text-muted">Genions stands at the forefront of biological innovation, merging
+                            cutting-edge technology with collaborative research methodologies.</p>
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-5">
+                    <div class="col-md-4">
+                        <div class="vision-card text-center p-4">
+                            <div class="icon-circle mb-4">
+                                <i class="bi bi-eye display-6"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Our Vision</h3>
+                            <p>To democratize biological research through open-source tools and collaborative platforms.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="vision-card text-center p-4">
+                            <div class="icon-circle mb-4">
+                                <i class="bi bi-bullseye display-6"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Our Mission</h3>
+                            <p>Accelerating scientific discoveries by breaking down barriers between researchers
+                                worldwide.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="vision-card text-center p-4">
+                            <div class="icon-circle mb-4">
+                                <i class="bi bi-stars display-6"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Our Values</h3>
+                            <p>Transparency, collaboration, innovation, and commitment to scientific excellence.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6">
+                        <div class="about-content">
+                            <h3 class="h2 mb-4">Why Choose Genions</h3>
+                            <div class="feature-list">
+                                <div class="feature-item-modern mb-4">
+                                    <i class="bi bi-dna"></i>
+                                    <div>
+                                        <h4 class="h5">Advanced Research Tools</h4>
+                                        <p>State-of-the-art DNA analysis and genomic visualization tools.</p>
+                                    </div>
+                                </div>
+                                <div class="feature-item-modern mb-4">
+                                    <i class="bi bi-cpu"></i>
+                                    <div>
+                                        <h4 class="h5">AI-Powered Solutions</h4>
+                                        <p>Leveraging machine learning for groundbreaking biological insights.</p>
+                                    </div>
+                                </div>
+                                <div class="feature-item-modern mb-4">
+                                    <i class="bi bi-graph-up"></i>
+                                    <div>
+                                        <h4 class="h5">Data Analytics</h4>
+                                        <p>Advanced analytics platforms for comprehensive research data.</p>
+                                    </div>
+                                </div>
+                                <div class="feature-item-modern">
+                                    <i class="bi bi-people"></i>
+                                    <div>
+                                        <h4 class="h5">Global Community</h4>
+                                        <p>Connect with researchers and scientists worldwide.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="about-image-grid">
                             <img src="https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZG5hfGVufDB8fDB8fHww"
                                 class="img-fluid rounded-xl shadow-lg mb-4" alt="DNA Research">
                             <div class="row g-4">
@@ -1052,205 +1086,207 @@ section {
                                 </div>
                             </div>
                         </div>
-            </div>
-          </div>
-        </div>
-      </section>
-  
-    <!-- Repo Section -->
-    <section id="repo" ng-show="activeSection === 'Repo'" class="min-vh-100">
-        <div class="container py-5">
-          <div class="text-center mb-5">
-            <span class="badge bg-gradient mb-3">Research Hub</span>
-            <h2 class="display-4 fw-bold">Scientific Repositories</h2>
-            <p class="lead text-muted">Explore our cutting-edge research projects and tools</p>
-          </div>
-          <div class="repo-grid">
-            <div class="repo-card" ng-repeat="repo in repos">
-              <div class="repo-icon">
-                <i class="bi" ng-class="repo.icon"></i>
-              </div>
-              <div class="repo-content">
-                <div class="repo-header">
-                  <h3>{{repo.name}}</h3>
-                  <span class="repo-stats">
-                    <i class="bi bi-star-fill"></i> {{repo.stars}}
-                    <i class="bi bi-diagram-2"></i> {{repo.forks}}
-                  </span>
+                    </div>
                 </div>
-                <p>{{repo.description}}</p>
-                <div class="repo-tech">
-                  <span class="tech-tag" ng-repeat="tech in repo.technologies">{{tech}}</span>
+            </div>
+        </section>
+
+        <!-- Repo Section -->
+        <section id="repo" ng-show="activeSection === 'Repo'" class="min-vh-100">
+            <div class="container py-5">
+                <div class="text-center mb-5">
+                    <span class="badge bg-gradient mb-3">Research Hub</span>
+                    <h2 class="display-4 fw-bold">Scientific Repositories</h2>
+                    <p class="lead text-muted">Explore our cutting-edge research projects and tools</p>
                 </div>
-                <div class="repo-footer">
-                  <a href="#" class="btn btn-gradient">
-                    <i class="bi bi-code-square"></i> View Project
-                  </a>
-                  <span class="repo-activity">
-                    <span class="activity-dot"></span>
-                    Active
-                  </span>
+                <div class="repo-grid">
+                    <div class="repo-card" ng-repeat="repo in repos">
+                        <div class="repo-icon">
+                            <i class="bi" ng-class="repo.icon"></i>
+                        </div>
+                        <div class="repo-content">
+                            <div class="repo-header">
+                                <h3>{{repo.name}}</h3>
+                                <span class="repo-stats">
+                                    <i class="bi bi-star-fill"></i> {{repo.stars}}
+                                    <i class="bi bi-diagram-2"></i> {{repo.forks}}
+                                </span>
+                            </div>
+                            <p>{{repo.description}}</p>
+                            <div class="repo-tech">
+                                <span class="tech-tag" ng-repeat="tech in repo.technologies">{{tech}}</span>
+                            </div>
+                            <div class="repo-footer">
+                                <a href="#" class="btn btn-gradient">
+                                    <i class="bi bi-code-square"></i> View Project
+                                </a>
+                                <span class="repo-activity">
+                                    <span class="activity-dot"></span>
+                                    Active
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </section>
+        </section>
 
-    <!-- Blog Section -->
-    <section id="blog" ng-show="activeSection === 'Blog'" class="min-vh-100">
-      <div class="container py-5">
-        <h2 class="text-center mb-5">Latest Insights</h2>
-        <div class="row g-4">
-          <div class="col-md-4" ng-repeat="post in blogPosts">
-            <div class="blog-card card h-100 shadow-hover">
-              <div class="blog-image-wrapper">
-                <img ng-src="{{post.image}}" class="card-img-top blog-image" alt="{{post.title}}">
-                <span class="blog-category">{{post.category}}</span>
-              </div>
-              <div class="card-body">
-                <small class="text-muted">{{post.date}}</small>
-                <h5 class="card-title mt-2">{{post.title}}</h5>
-                <p class="card-text">{{post.excerpt}}</p>
-                <button class="btn btn-outline-aqua" ng-click="viewPost(post)">Read More</button>
-              </div>
+        <!-- Blog Section -->
+        <section id="blog" ng-show="activeSection === 'Blog'" class="min-vh-100">
+            <div class="container py-5">
+                <h2 class="text-center mb-5">Latest Insights</h2>
+                <div class="row g-4">
+                    <div class="col-md-4" ng-repeat="post in blogPosts">
+                        <div class="blog-card card h-100 shadow-hover">
+                            <div class="blog-image-wrapper">
+                                <img ng-src="{{post.image}}" class="card-img-top blog-image" alt="{{post.title}}">
+                                <span class="blog-category badge bg-light text-dark me-2">{{post.category}}</span>
+                            </div>
+                            <div class="card-body">
+                                <small class="text-muted">{{post.date}}</small>
+                                <h5 class="card-title mt-2">{{post.title}}</h5>
+                                <p class="card-text">{{post.excerpt}}</p>
+                                <button class="btn btn-outline-aqua" ng-click="viewPost(post)">Read More</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <!-- Single Blog Post Section -->
-    <section id="blogPost" ng-show="activeSection === 'BlogPost'" class="min-vh-100">
-        <div class="blog-post-hero" style="background-image: url('{{selectedPost.image}}')">
-          <div class="hero-overlay"></div>
-        </div>
-        <div class="container">
-          <div class="blog-post-modern">
-            <button class="back-button" ng-click="backToBlog()">
-              <i class="bi bi-arrow-left"></i>
-              <span>Back to Articles</span>
-            </button>
-            <div class="post-header">
-              <span class="post-category">{{selectedPost.category}}</span>
-              <h1 class="post-title">{{selectedPost.title}}</h1>
-              <div class="post-meta">
-                <span><i class="bi bi-calendar3"></i> {{selectedPost.date}}</span>
-                <span><i class="bi bi-clock"></i> 5 min read</span>
-                <span><i class="bi bi-share"></i> Share</span>
-              </div>
+        <!-- Single Blog Post Section -->
+        <section id="blogPost" ng-show="activeSection === 'BlogPost'" class="min-vh-100">
+            <div class="blog-post-hero" style="background-image: url('{{selectedPost.image}}')">
+                <div class="hero-overlay"></div>
             </div>
-            <div class="post-content">
-              <p class="lead">{{selectedPost.excerpt}}</p>
-              <div class="blog-full-content" ng-bind-html="selectedPost.content | lineBreaks"></div>
-              <div class="post-tags mt-4">
-                <span class="badge bg-light text-dark me-2">Research</span>
-                <span class="badge bg-light text-dark me-2">Innovation</span>
-                <span class="badge bg-light text-dark">Technology</span>
-              </div>
+            <div class="container">
+                <div class="blog-post-modern">
+                    <button class="back-button" ng-click="backToBlog()">
+                        <i class="bi bi-arrow-left"></i>
+                        <span>Back to Articles</span>
+                    </button>
+                    <div class="post-header">
+                        <span class="post-category">{{selectedPost.category}}</span>
+                        <h1 class="post-title">{{selectedPost.title}}</h1>
+                        <div class="post-meta">
+                            <span><i class="bi bi-calendar3"></i> {{selectedPost.date}}</span>
+                            <span><i class="bi bi-clock"></i> 5 min read</span>
+                            <span><i class="bi bi-share"></i> Share</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p class="lead">{{selectedPost.excerpt}}</p>
+                        <div class="blog-full-content" ng-bind-html="selectedPost.content | lineBreaks"></div>
+                        <div class="post-tags mt-4">
+                            <span class="badge bg-light text-dark me-2">Research</span>
+                            <span class="badge bg-light text-dark me-2">Innovation</span>
+                            <span class="badge bg-light text-dark">Technology</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </section>
+        </section>
     </div>
-  
 
-  <!-- Footer -->
-  <footer class="footer mt-auto">
-    <div class="footer-content">
-      <div class="container">
-        <div class="row g-4">
-          <div class="col-lg-4">
-            <div class="footer-brand">
-              <svg class="footer-logo" width="40" height="40" viewBox="0 0 32 32">
-                <path d="M16 0C7.163 0 0 7.163 0 16s7.163 16 16 16 16-7.163 16-16S24.837 0 16 0zm0 4c6.627 0 12 5.373 12 12s-5.373 12-12 12S4 22.627 4 16 9.373 4 16 4z" fill="url(#footer-gradient)"/>
-                <defs>
-                  <linearGradient id="footer-gradient" x1="0" y1="0" x2="32" y2="32">
-                    <stop offset="0%" stop-color="#00b4d8"/>
-                    <stop offset="100%" stop-color="#0077b6"/>
-                  </linearGradient>
-                </defs>
-              </svg>
-              <h3 class="footer-title">Genions</h3>
-              <p class="footer-tagline">Advancing the Future of BioScience</p>
-              <p>By UISR.ORG</p>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto">
+        <div class="footer-content">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <div class="footer-brand">
+                            <svg class="footer-logo" width="40" height="40" viewBox="0 0 32 32">
+                                <path
+                                    d="M16 0C7.163 0 0 7.163 0 16s7.163 16 16 16 16-7.163 16-16S24.837 0 16 0zm0 4c6.627 0 12 5.373 12 12s-5.373 12-12 12S4 22.627 4 16 9.373 4 16 4z"
+                                    fill="url(#footer-gradient)" />
+                                <defs>
+                                    <linearGradient id="footer-gradient" x1="0" y1="0" x2="32" y2="32">
+                                        <stop offset="0%" stop-color="#00b4d8" />
+                                        <stop offset="100%" stop-color="#0077b6" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <h3 class="footer-title">Genions</h3>
+                            <p class="footer-tagline">Advancing the Future of BioScience</p>
+                            <p>By UISR.ORG</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="footer-links">
+                            <div class="quick-links">
+                                <a href="#home">Home</a>
+                                <a href="#about">About</a>
+                                <a href="#repo">Research</a>
+                                <a href="#blog">Blog</a>
+                            </div>
+                            <div class="social-links">
+                                <a href="#" class="social-link"><i class="bi bi-github"></i></a>
+                                <a href="#" class="social-link"><i class="bi bi-twitter"></i></a>
+                                <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-lg-8">
-            <div class="footer-links">
-              <div class="quick-links">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#repo">Research</a>
-                <a href="#blog">Blog</a>
-              </div>
-              <div class="social-links">
-                <a href="#" class="social-link"><i class="bi bi-github"></i></a>
-                <a href="#" class="social-link"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="container">
-        <p class="copyright">© 2025 Genions. All rights reserved.</p>
-        <div class="footer-line"></div>
-      </div>
-    </div>
-  </footer>
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="copyright">© 2025 Genions. All rights reserved.</p>
+                <div class="footer-line"></div>
+            </div>
+        </div>
+    </footer>
 
-  <!-- Scripts -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script >
-   
-   angular.module('genionweb', [])
-.filter('lineBreaks', ['$sce', function($sce) {
-  return function(text) {
-    if (!text) return '';
-    text = text.replace(/\n/g, '<br>');
-    return $sce.trustAsHtml(text);
-  };
-}])
-.controller('MainCtrl', function($scope) {
-  $scope.sections = ['Home', 'About', 'Repo', 'Blog'];
-  $scope.activeSection = 'Home';
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
 
-  $scope.repos = [
-    {
-      name: 'BioSequence',
-      description: 'Advanced DNA sequence analysis tools with real-time processing capabilities and AI-driven predictions',
-      icon: 'bi-dna',
-      stars: '2.1k',
-      forks: '342',
-      technologies: ['Python', 'TensorFlow', 'BioPython']
-    },
-    {
-      name: 'GenomeViz',
-      description: 'Interactive genomic data visualization platform with 3D modeling and comparative analysis features',
-      icon: 'bi-graph-up',
-      stars: '1.8k',
-      forks: '256',
-      technologies: ['JavaScript', 'D3.js', 'WebGL']
-    },
-    {
-      name: 'BioML',
-      description: 'State-of-the-art machine learning algorithms optimized for biological data analysis and prediction',
-      icon: 'bi-cpu',
-      stars: '3.2k',
-      forks: '567',
-      technologies: ['Python', 'PyTorch', 'Scikit-learn']
-    }
-  ];
+        angular.module('genionweb', [])
+            .filter('lineBreaks', ['$sce', function ($sce) {
+                return function (text) {
+                    if (!text) return '';
+                    text = text.replace(/\n/g, '<br>');
+                    return $sce.trustAsHtml(text);
+                };
+            }])
+            .controller('MainCtrl', function ($scope) {
+                $scope.sections = ['Home', 'About', 'Repo', 'Blog'];
+                $scope.activeSection = 'Home';
 
-  $scope.blogPosts = [
-    {
-      title: 'Advancing Genomics Research',
-      excerpt: 'Breakthrough discoveries in genomic sequencing technology are revolutionizing our understanding of life.',
-      content: `Recent advances in genomic sequencing technology have opened new frontiers in biological research. Our team has developed innovative approaches that significantly reduce sequencing time while improving accuracy.
+                $scope.repos = [
+                    {
+                        name: 'BioSequence',
+                        description: 'Advanced DNA sequence analysis tools with real-time processing capabilities and AI-driven predictions',
+                        icon: 'bi-dna',
+                        stars: '2.1k',
+                        forks: '342',
+                        technologies: ['Python', 'TensorFlow', 'BioPython']
+                    },
+                    {
+                        name: 'GenomeViz',
+                        description: 'Interactive genomic data visualization platform with 3D modeling and comparative analysis features',
+                        icon: 'bi-graph-up',
+                        stars: '1.8k',
+                        forks: '256',
+                        technologies: ['JavaScript', 'D3.js', 'WebGL']
+                    },
+                    {
+                        name: 'BioML',
+                        description: 'State-of-the-art machine learning algorithms optimized for biological data analysis and prediction',
+                        icon: 'bi-cpu',
+                        stars: '3.2k',
+                        forks: '567',
+                        technologies: ['Python', 'PyTorch', 'Scikit-learn']
+                    }
+                ];
+
+                $scope.blogPosts = [
+                    {
+                        title: 'Advancing Genomics Research',
+                        excerpt: 'Breakthrough discoveries in genomic sequencing technology are revolutionizing our understanding of life.',
+                        content: `Recent advances in genomic sequencing technology have opened new frontiers in biological research. Our team has developed innovative approaches that significantly reduce sequencing time while improving accuracy.
 
 The key breakthroughs include:
 • Advanced DNA extraction methods
@@ -1259,15 +1295,15 @@ The key breakthroughs include:
 • Enhanced data visualization
 
 These developments are particularly important for understanding rare genetic disorders and developing personalized medicine approaches. Our research indicates a 40% improvement in sequence accuracy and a 60% reduction in processing time.`,
-      image: 'https://plus.unsplash.com/premium_photo-1661391809574-bb92749f8286?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      date: '2024-01-15',
-      category: 'Research',
-      readTime: '7 min'
-    },
-    {
-      title: 'Future of Computational Biology',
-      excerpt: 'How AI is transforming biological research and discovery through innovative computational methods.',
-      content: `Artificial Intelligence is revolutionizing how we approach biological research. Machine learning algorithms are now capable of predicting protein structures, identifying gene functions, and discovering new drug candidates with unprecedented accuracy.
+                        image: 'https://images.unsplash.com/photo-1583912086268-cb0854235c9f?q=80&w=1474&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                        date: '2024-01-15',
+                        category: 'Research',
+                        readTime: '7 min'
+                    },
+                    {
+                        title: 'Future of Computational Biology',
+                        excerpt: 'How AI is transforming biological research and discovery through innovative computational methods.',
+                        content: `Artificial Intelligence is revolutionizing how we approach biological research. Machine learning algorithms are now capable of predicting protein structures, identifying gene functions, and discovering new drug candidates with unprecedented accuracy.
 
 Key developments in computational biology:
 • Deep learning models for protein folding
@@ -1276,15 +1312,15 @@ Key developments in computational biology:
 • Cloud-based distributed computing systems
 
 These advancements are accelerating research timelines and enabling discoveries that were previously impossible. Our latest models show 85% accuracy in protein structure prediction.`,
-      image: 'https://cdn.pixabay.com/photo/2020/03/19/21/25/workspace-4948837_1280.jpg',
-      date: '2024-01-10',
-      category: 'Technology',
-      readTime: '5 min'
-    },
-    {
-      title: 'Sustainable Biology Practices',
-      excerpt: 'Implementing eco-friendly approaches in biological research for a sustainable future.',
-      content: `Sustainability in biological research is no longer optional - it's imperative. Our laboratories have implemented groundbreaking eco-friendly practices that reduce environmental impact while maintaining research quality.
+                        image: 'https://cdn.pixabay.com/photo/2020/03/19/21/25/workspace-4948837_1280.jpg',
+                        date: '2024-01-10',
+                        category: 'Technology',
+                        readTime: '5 min'
+                    },
+                    {
+                        title: 'Sustainable Biology Practices',
+                        excerpt: 'Implementing eco-friendly approaches in biological research for a sustainable future.',
+                        content: `Sustainability in biological research is no longer optional - it's imperative. Our laboratories have implemented groundbreaking eco-friendly practices that reduce environmental impact while maintaining research quality.
 
 Sustainable initiatives include:
 • Energy-efficient laboratory equipment
@@ -1293,49 +1329,50 @@ Sustainable initiatives include:
 • Renewable energy integration
 
 Results show a 50% reduction in energy consumption and a 70% decrease in hazardous waste production. These practices are setting new standards for responsible research.`,
-      image: 'https://plus.unsplash.com/premium_photo-1661371573606-5abfcbf88e91?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      date: '2024-01-05',
-      category: 'Sustainability',
-      readTime: '6 min'
-    }
-  ];
+                        image: 'https://plus.unsplash.com/premium_photo-1661371573606-5abfcbf88e91?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                        date: '2024-01-05',
+                        category: 'Sustainability',
+                        readTime: '6 min'
+                    }
+                ];
 
-  $scope.selectedPost = null;
-  
-  $scope.viewPost = function(post) {
-    $scope.selectedPost = post;
-    $scope.activeSection = 'BlogPost';
-  };
+                $scope.selectedPost = null;
 
-  $scope.backToBlog = function() {
-    $scope.selectedPost = null;
-    $scope.activeSection = 'Blog';
-  };
+                $scope.viewPost = function (post) {
+                    $scope.selectedPost = post;
+                    $scope.activeSection = 'BlogPost';
+                };
 
-  $scope.setActive = function(section) {
-    $scope.activeSection = section;
-    // Close navbar on mobile when clicking a link
-    const navbarCollapse = document.getElementById('navbarNav');
-    if (navbarCollapse.classList.contains('show')) {
-      navbarCollapse.classList.remove('show');
-    }
-  };
+                $scope.backToBlog = function () {
+                    $scope.selectedPost = null;
+                    $scope.activeSection = 'Blog';
+                };
 
-  $scope.isActive = function(section) {
-    return $scope.activeSection === section;
-  };
+                $scope.setActive = function (section) {
+                    $scope.activeSection = section;
+                    // Close navbar on mobile when clicking a link
+                    const navbarCollapse = document.getElementById('navbarNav');
+                    if (navbarCollapse.classList.contains('show')) {
+                        navbarCollapse.classList.remove('show');
+                    }
+                };
 
-  // Close navbar when clicking outside
-  document.addEventListener('click', function(event) {
-    const navbarCollapse = document.getElementById('navbarNav');
-    const navbarToggler = document.querySelector('.navbar-toggler');
-    if (!navbarToggler.contains(event.target) && !navbarCollapse.contains(event.target)) {
-      navbarCollapse.classList.remove('show');
-    }
-  });
-});
+                $scope.isActive = function (section) {
+                    return $scope.activeSection === section;
+                };
+
+                // Close navbar when clicking outside
+                document.addEventListener('click', function (event) {
+                    const navbarCollapse = document.getElementById('navbarNav');
+                    const navbarToggler = document.querySelector('.navbar-toggler');
+                    if (!navbarToggler.contains(event.target) && !navbarCollapse.contains(event.target)) {
+                        navbarCollapse.classList.remove('show');
+                    }
+                });
+            });
 
 
-  </script>
+    </script>
 </body>
+
 </html>
